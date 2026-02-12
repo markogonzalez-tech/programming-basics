@@ -1,4 +1,19 @@
-tasks = []
+import os
+
+FILE_NAME = "tasks.txt"
+
+def load_tasks():
+    if not os.path.exists(FILE_NAME):
+        return []
+    with open(FILE_NAME, "r") as file:
+        return [line.strip() for line in file.readlines()]
+
+def save_tasks(tasks):
+    with open(FILE_NAME, "w") as file:
+        for task in tasks:
+            file.write(task + "\n")
+
+tasks = load_tasks()
 
 def show_tasks():
     if len(tasks) == 0:
@@ -11,6 +26,7 @@ def show_tasks():
 def add_task():
     task = input("Enter a new task: ")
     tasks.append(task)
+    save_tasks(tasks)
     print("Task added successfully!")
 
 while True:
