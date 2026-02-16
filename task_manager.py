@@ -1,48 +1,37 @@
-import os
+import java.util.Scanner;
 
-FILE_NAME = "tasks.txt"
+public class Main {
 
-def load_tasks():
-    if not os.path.exists(FILE_NAME):
-        return []
-    with open(FILE_NAME, "r") as file:
-        return [line.strip() for line in file.readlines()]
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
 
-def save_tasks(tasks):
-    with open(FILE_NAME, "w") as file:
-        for task in tasks:
-            file.write(task + "\n")
+        while (running) {
 
-tasks = load_tasks()
+            System.out.print("Enter your name: ");
+            String name = scanner.nextLine();
 
-def show_tasks():
-    if len(tasks) == 0:
-        print("No tasks yet.")
-    else:
-        print("\nYour tasks:")
-        for i, task in enumerate(tasks):
-            print(f"{i + 1}. {task}")
+            System.out.print("Enter your age: ");
+            int age = scanner.nextInt();
+            scanner.nextLine(); // limpiar buffer
 
-def add_task():
-    task = input("Enter a new task: ")
-    tasks.append(task)
-    save_tasks(tasks)
-    print("Task added successfully!")
+            if (age < 0) {
+                System.out.println("Invalid age.");
+            } else if (age >= 18) {
+                System.out.println("You are an adult, " + name + ".");
+            } else {
+                System.out.println("You are a minor, " + name + ".");
+            }
 
-while True:
-    print("\n--- TASK MANAGER ---")
-    print("1. Show tasks")
-    print("2. Add task")
-    print("3. Exit")
+            System.out.println("\nDo you want to try again? (yes/no)");
+            String answer = scanner.nextLine();
 
-    choice = input("Choose an option: ")
+            if (!answer.equalsIgnoreCase("yes")) {
+                running = false;
+                System.out.println("Program finished.");
+            }
+        }
 
-    if choice == "1":
-        show_tasks()
-    elif choice == "2":
-        add_task()
-    elif choice == "3":
-        print("Goodbye!")
-        break
-    else:
-        print("Invalid option. Try again.")
+        scanner.close();
+    }
+}
